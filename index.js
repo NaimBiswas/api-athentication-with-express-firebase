@@ -8,24 +8,51 @@ app.get('/', (req, res) => res.send('Hello World!'))
 
 // Resgistration system 
 app.post("/signup", async (req, res) => {
-   try {
-      const Email = req.body.email;
-      let Password = req.body.password;
+   const { Email, Password } = req.body
+   if (Email && Password) {
+      try {
 
-      const NewUser = await auth.createUserWithEmailAndPassword(
-         Email,
-         Password,
-      ).then(() => {
-         console.log("LogIN Success");
-      }).catch((error) => {
-         console.log(error);
-      })
-      console.log(NewUser);
-      res.send("Login Success")
-   } catch (error) {
-      res.send("There was an error")
-      console.log(error);
+         const NewUser = await auth.createUserWithEmailAndPassword(
+            Email,
+            Password,
+         ).then(() => {
+            console.log("Registration Success");
+            res.status(201).send({
+               message: "Registration Success",
+               username: Email,
+               status: 201,
+            });
+         }).catch((error) => {
+            console.log(error.message);
+            res.send(error.message)
+         })
+
+
+         return;
+      } catch (error) {
+
+         if (error.code === 11000) {
+            res
+               .status(409)
+               .send({ message: "User Already Registered", status: 409 });
+            return;
+         } else {
+            console.log(error);
+            res.status(500).send({
+               message: "Something went Worng Please Try Again",
+               status: 500,
+            });
+         }
+      }
+   } else {
+      res.status(400).send({
+         message:
+            "Request Received with Incomplete Details. username, email, mobile and password are mandatory",
+         status: 400,
+      });
+
    }
+
 });
 
 // Login System 
