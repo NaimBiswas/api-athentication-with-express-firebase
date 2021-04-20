@@ -59,17 +59,25 @@ app.post("/signup", async (req, res) => {
 
 
 app.post("/login", async (req, res) => {
-   try {
-      const email = req.body.email;
-      const password = req.body.password;
-      const LogedIN = auth.signInWithEmailAndPassword(email, password).then(() => {
-         res.status(201).send("Login Sucess");
-      }).catch((error) => {
-         res.status(400).send(`"Something went worng" ${error}`)
-      })
-   } catch (error) {
-      console.log(error);
-      res.send(`There was an error Check Again ${error}`)
+   const { email, password } = req.body
+   if (email && password) {
+      try {
+
+         const LogedIN = auth.signInWithEmailAndPassword(email, password)
+            .then(() => {
+               res.status(201).send("Login Sucess");
+            })
+            .catch((error) => {
+               res.status(400).send(`"Something went worng" ${error}`)
+            })
+      } catch (error) {
+         console.log(error);
+         res.send(`There was an error Check Again ${error}`)
+      }
+   } else {
+      res
+         .status(400)
+         .send({ message: "Request made with incomplete details", status: 400 });
    }
 })
 
