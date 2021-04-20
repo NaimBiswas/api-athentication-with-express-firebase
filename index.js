@@ -26,6 +26,24 @@ app.post("/signup", async (req, res) => {
       res.send("There was an error")
       console.log(error);
    }
+});
+
+// Login System 
+
+
+app.post("/login", async (req, res) => {
+   try {
+      const email = req.body.email;
+      const password = req.body.password;
+      const LogedIN = auth.signInWithEmailAndPassword(email, password).then(() => {
+         res.status(201).send("Login Sucess");
+      }).catch((error) => {
+         res.status(400).send(`"Something went worng" ${error}`)
+      })
+   } catch (error) {
+      console.log(error);
+      res.send(`There was an error Check Again ${error}`)
+   }
 })
 
 
