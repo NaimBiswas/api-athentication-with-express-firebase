@@ -1,28 +1,17 @@
-const express = require('express')
-
-const app = express()
-const port = 3000
-app.use(express.json())
-const { auth, provider, db } = require("./src/firebase")
-
-// const Tuitor = require("./tuitor")
-app.get('/', (req, res) => res.send('Hello World!'))
-
-// Resgistration system 
 app.post("/signup", async (req, res) => {
    const name = req.body.name;
    const email = req.body.email;
    const password = req.body.password;
-   const fullAddress = req.body.FullAddress;
+   const FullAddress = req.body.FullAddress;
    const gender = req.body.gender;
    const dateOfBarth = req.body.dateOfBarth;
    const mobile = req.body.mobile;
    const type = req.body.type;
-   const whatsApp = req.body.whatsapp;
+   const whatsapp = req.body.whatsapp;
    const city = req.body.city;
    const area = req.body.area;
    const pinCode = req.body.pinCode;
-   const classType = req.body.classType;
+   const ClassType = req.body.classType;
    const teacher = await db.collection("details").doc().set(
       {
          name: name,
@@ -31,14 +20,14 @@ app.post("/signup", async (req, res) => {
          mobile: mobile,
          type: type,
          otherDetails: {
-            FullAddress: fullAddress,
+            FullAddress: FullAddress,
             gender: gender,
             dateOfBarth: dateOfBarth,
-            whatsapp: whatsApp,
+            whatsapp: whatsapp,
             city: city,
             area: area,
             pinCode: pinCode,
-            ClassType: classType,
+            ClassType: ClassType,
             Profile: {
                name: name,
                email: email,
@@ -91,41 +80,3 @@ app.post("/signup", async (req, res) => {
    }
 
 });
-
-// Login System 
-
-
-app.post("/login", async (req, res) => {
-   const { email, password } = req.body
-   if (email && password) {
-      try {
-
-         const LogedIN = auth.signInWithEmailAndPassword(email, password)
-            .then(() => {
-               res.status(201).send("Login Sucess");
-            })
-            .catch((error) => {
-               res.status(400).send(`"Something went worng" ${error}`)
-            })
-      } catch (error) {
-         console.log(error);
-         res.send(`There was an error Check Again ${error}`)
-      }
-   } else {
-      res
-         .status(400)
-         .send({ message: "Request made with incomplete details", status: 400 });
-   }
-})
-
-
-
-
-// google sign in process 
-const googleSignIn = () => {
-   auth.signInWithPopup(provider).catch(error => alert(error.message))
-}
-
-
-
-app.listen(port, () => console.log(`Example app listening on port port!`))
