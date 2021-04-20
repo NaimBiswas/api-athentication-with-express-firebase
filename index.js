@@ -5,6 +5,7 @@ const port = 3000
 app.use(express.json())
 const { auth } = require("./src/firebase")
 app.get('/', (req, res) => res.send('Hello World!'))
+
 // Resgistration system 
 app.post("/signup", async (req, res) => {
    try {
