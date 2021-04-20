@@ -10,85 +10,78 @@ app.get('/', (req, res) => res.send('Hello World!'))
 
 // Resgistration system 
 app.post("/signup", async (req, res) => {
-   const name = req.body.name;
-   const email = req.body.email;
-   const password = req.body.password;
-   const fullAddress = req.body.FullAddress;
-   const gender = req.body.gender;
-   const dateOfBarth = req.body.dateOfBarth;
-   const mobile = req.body.mobile;
-   const type = req.body.type;
-   const whatsApp = req.body.whatsapp;
-   const city = req.body.city;
-   const area = req.body.area;
-   const pinCode = req.body.pinCode;
-   const classType = req.body.classType;
-   const teacher = await db.collection("details").doc().set(
-      {
-         name: name,
-         email: email,
-         password: password,
-         mobile: mobile,
-         type: type,
-         otherDetails: {
-            FullAddress: fullAddress,
-            gender: gender,
-            dateOfBarth: dateOfBarth,
-            whatsapp: whatsApp,
-            city: city,
-            area: area,
-            pinCode: pinCode,
-            ClassType: classType,
-            Profile: {
-               name: name,
-               email: email,
+   const { name, email, password, mobile, type, } = req.body
+
+   const { fullAddress, gender, dateOfBarth, whatsApp, city, area, pinCode, classType } = req.body.otherDetails
+
+
+
+   const teacher = await
+      db
+         .collection("details")
+         .doc()
+         .set({
+            name: name,
+            email: email,
+            password: password,
+            mobile: mobile,
+            type: type,
+            otherDetails: {
+               fullAddress: fullAddress,
+               gender: gender,
+               dateOfBarth: dateOfBarth,
+               whatsApp: whatsApp,
+               city: city,
+               area: area,
+               pinCode: pinCode,
+               classType: classType,
+
             }
-         }
-      }
-   )
-
-
-   if (email && password) {
-      try {
-
-         const NewUser = await auth.createUserWithEmailAndPassword(
-            email,
-            password,
-         ).then(() => {
-            console.log("Registration Success");
-            res.status(201).send({
-               message: "Registration Success",
-               username: email,
-               status: 201,
-            });
-         }).catch((error) => {
-            console.log(error.message);
-            res.send(error.message)
          })
-         return;
-      } catch (error) {
 
-         if (error.code === 11000) {
-            res
-               .status(409)
-               .send({ message: "User Already Registered", status: 409 });
-            return;
-         } else {
-            console.log(error);
-            res.status(500).send({
-               message: "Something went Worng Please Try Again",
-               status: 500,
-            });
-         }
-      }
-   } else {
-      res.status(400).send({
-         message:
-            "Request Received with Incomplete Details. username, email, mobile and password are mandatory",
-         status: 400,
-      });
 
-   }
+
+   // if (email && password) {
+   //    try {
+
+   //       const NewUser = await auth.createUserWithEmailAndPassword(
+   //          email,
+   //          password,
+   //       ).then(() => {
+   //          console.log("Registration Success");
+   //          res.status(201).send({
+   //             message: "Registration Success",
+   //             username: email,
+   //             status: 201,
+   //          });
+   //       }).catch((error) => {
+   //          console.log(error.message);
+   //          res.send(error.message)
+   //       })
+   //       return;
+   //    } catch (error) {
+
+   //       if (error.code === 11000) {
+   //          res
+   //             .status(409)
+   //             .send({ message: "User Already Registered", status: 409 });
+   //          return;
+   //       } else {
+   //          console.log(error);
+   //          res.status(500).send({
+   //             message: "Something went Worng Please Try Again",
+   //             status: 500,
+   //          });
+   //       }
+   //    }
+   // } else {
+   //    res.status(400).send({
+   //       message:
+   //          "Request Received with Incomplete Details. username, email, mobile and password are mandatory",
+   //       status: 400,
+   //    });
+
+   // }
 
 });
 
