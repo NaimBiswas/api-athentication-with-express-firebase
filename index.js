@@ -8,7 +8,8 @@ app.get('/', (req, res) => res.send('Hello World!'))
 
 // Resgistration system 
 app.post("/signup", async (req, res) => {
-   const { Email, Password } = req.body
+   const Email = req.body.email;
+   const Password = req.body.password
    if (Email && Password) {
       try {
 
