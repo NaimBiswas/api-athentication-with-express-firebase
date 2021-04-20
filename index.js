@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 app.use(express.json())
-const { auth } = require("./src/firebase")
+const { auth, provider } = require("./src/firebase")
 app.get('/', (req, res) => res.send('Hello World!'))
 
 // Resgistration system 
@@ -83,8 +83,9 @@ app.post("/login", async (req, res) => {
 
 
 
-
-
+const googleSignIn = () => {
+   auth.signInWithPopup(provider).catch(error => alert(error.message))
+}
 
 
 
