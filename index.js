@@ -4,6 +4,7 @@ const port = 3001
 app.use(express.json())
 const { auth, provider, db } = require("./src/firebase")
 const course = require("./courses/course")
+const jobsRoute = require("./jobs/jobs")
 // const Tuitor = require("./tuitor")
 app.get('/', (req, res) => res.send('Hello World!'))
 
@@ -114,8 +115,8 @@ app.post("/login", async (req, res) => {
 // courses routes 
 app.use("/course", course)
 
-
-
+// Job Routs Here 
+app.use("/jobs", jobsRoute)
 
 // google sign in process 
 const googleSignIn = () => {
