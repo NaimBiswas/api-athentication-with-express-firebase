@@ -4,11 +4,11 @@ const { dataBase } = require("../src/firebase")
 // get All Jobs 
 Router.get('/', async (req, res) => {
    try {
-      dataBase.ref("jobs").once("value")
+      await dataBase.ref("jobs").once("value")
          .then((data) => {
             if (data.val()) {
                console.log(data.val());
-               res.send(data.val())
+               res.status(200).send(data.val())
             } else {
                res.send("NO JOBS FOUNDS")
                console.log("NO JOBS FOUNDS")
