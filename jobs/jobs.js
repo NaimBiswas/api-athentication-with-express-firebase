@@ -1,14 +1,18 @@
 const express = require('express')
+const app = express()
 const Router = express.Router();
 const { dataBase } = require("../src/firebase")
+const cors = require("cors")
+app.use(cors());
 // get All Jobs 
-Router.get('/', async (req, res) => {
+Router.get('/', async (req, res, next) => {
+
    try {
-      await dataBase.ref("jobs").once("value")
+
+      const AllDate = await dataBase.ref("jobs").once("value")
          .then((data) => {
             if (data.val()) {
-               console.log(data.val());
-               res.status(200).send(data.val())
+               res.status(200).json(data)
             } else {
                res.send("NO JOBS FOUNDS")
                console.log("NO JOBS FOUNDS")
@@ -16,6 +20,7 @@ Router.get('/', async (req, res) => {
          }).catch(err => {
             console.log(err);
          })
+
    } catch (error) {
       console.log(error);
    }
@@ -24,8 +29,6 @@ Router.get('/', async (req, res) => {
 // Route for post job requst 
 
 Router.post("/", async (req, res) => {
-
-
    try {
       const ref = dataBase.ref("jobs")
       const DateTime = Date.now()
