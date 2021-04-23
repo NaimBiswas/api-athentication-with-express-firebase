@@ -9,7 +9,7 @@ Router.get('/', async (req, res) => {
       await dataBase.ref("courses").once("value")
          .then((data) => {
             console.log(data.val());
-            res.send(data.val())
+            res.status(200,).send(data.val())
          }).catch(err => {
             console.log(err);
          })
