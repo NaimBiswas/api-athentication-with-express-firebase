@@ -30,7 +30,7 @@ Router.post("/", async (req, res) => {
       const ref = dataBase.ref("jobs")
       const DateTime = Date.now()
       const { image, title, timteSchedule, priceRange, priceType, postTime, postCategoy, dolarRange, location, totalBid, endDate } = req.body;
-      ref.child(DateTime)
+      await ref.child(DateTime)
          .set({
             image: image,
             title: title,
