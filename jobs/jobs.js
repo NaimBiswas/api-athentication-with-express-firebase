@@ -2,7 +2,7 @@ const express = require('express')
 const Router = express.Router();
 const { dataBase } = require("../src/firebase")
 // get All Jobs 
-Router.get('/', async (req, res) => {
+Router.get('/get-jobs', async (req, res) => {
    try {
       await dataBase.ref("jobs").once("value")
          .then((data) => {
@@ -19,6 +19,16 @@ Router.get('/', async (req, res) => {
    } catch (error) {
       console.log(error);
    }
+});
+
+// Route for post job requst 
+Router.post("/post-job", async (req, res) => {
+   try {
+      res.send("This is job post Request")
+   } catch (error) {
+      res.send(error)
+   }
 })
+
 
 module.exports = Router;
