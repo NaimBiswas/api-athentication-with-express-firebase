@@ -1,10 +1,10 @@
 const express = require('express')
 
 const app = express()
-const port = 3000
+const port = 3001
 app.use(express.json())
 const { auth, provider, db } = require("./src/firebase")
-
+const course = require("./courses/course")
 // const Tuitor = require("./tuitor")
 app.get('/', (req, res) => res.send('Hello World!'))
 
@@ -110,6 +110,10 @@ app.post("/login", async (req, res) => {
          .send({ message: "Request made with incomplete details", status: 400 });
    }
 })
+
+
+// courses routes 
+app.use("/course", course)
 
 
 
