@@ -1,0 +1,24 @@
+{
+  "name": "expresswithfirebase",
+  "version": "1.0.0",
+  "description": "Express auth with firebase",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "author": "Naim Biswas",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "csurf": "^1.11.0",
+    "express": "^4.17.1",
+    "firebase": "^8.4.1",
+    "firebase-admin": "^9.6.0",
+    "nodemon": "^2.0.7",
+    "serverless-http": "^2.7.0"
+  }
+}
