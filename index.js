@@ -51,7 +51,7 @@ app.post("/signup", async (req, res) => {
 
 
 // singup with firebase 
-app.post("/signup", async (req, res) => {
+app.post("/registration", async (req, res) => {
    const { email, password } = req.body
 
    if (email && password) {
