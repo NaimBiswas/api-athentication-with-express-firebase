@@ -1,4 +1,6 @@
-const express = require('express')
+'use strict';
+const express = require('express');
+const serverless = require('serverless-http');
 const app = express()
 const port = process.env.PORT || 3001;
 app.use(express.json())
@@ -131,3 +133,4 @@ const googleSignIn = () => {
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+module.exports.handler = serverless(app);
