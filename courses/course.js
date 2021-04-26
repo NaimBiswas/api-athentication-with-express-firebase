@@ -3,7 +3,7 @@ const { dataBase } = require("../src/firebase")
 const Router = express.Router();
 
 
-
+// get all course 
 Router.get('/', async (req, res) => {
    try {
       await dataBase.ref("courses").once("value")
