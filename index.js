@@ -5,10 +5,12 @@ app.use(express.json())
 const { auth, provider, db } = require("./src/firebase")
 const course = require("./courses/course")
 const jobsRoute = require("./jobs/jobs")
+const bodyParser = require("body-parser")
 
 const cors = require('cors');
 app.use(cors());
-
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 app.get('/', (req, res) => res.send('Hello World!'))
 
 // Resgistration system 
