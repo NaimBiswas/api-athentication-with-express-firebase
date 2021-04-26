@@ -1,6 +1,6 @@
 'use strict';
 const express = require('express');
-const serverless = require('serverless-http');
+
 const app = express()
 const port = process.env.PORT || 3001;
 app.use(express.json())
@@ -20,8 +20,6 @@ app.post("/signup", async (req, res) => {
    const { name, email, password, mobile, type, } = req.body
 
    const { fullAddress, gender, dateOfBarth, whatsApp, city, area, pinCode, classType } = req.body.otherDetails
-
-
 
    const teacher = await
       db
