@@ -8,15 +8,21 @@ const { auth, provider, db } = require("./src/firebase")
 const course = require("./courses/course")
 const jobsRoute = require("./jobs/jobs")
 const bodyParser = require("body-parser")
-
+const StudentDetails = require("./students/addStudentsDetails")
 const cors = require('cors');
 app.use(cors());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use("/", StudentDetails)
 app.get('/', (req, res) => res.send('Hello World!'))
 
+
+
+
+
 // Resgistration system 
-app.post("/teacher-signup", async (req, res) => {
+app.post("/teacher-details", async (req, res) => {
    const { name, gender, mobile, email, area, fullAddress, yearOfBarth, whatsApp, city, pinCode, classType, segments,
       fees,
 
@@ -81,10 +87,6 @@ app.post("/teacher-signup", async (req, res) => {
             console.log(err);
             res.send(err)
          })
-
-
-
-
 });
 
 
