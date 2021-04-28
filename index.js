@@ -16,32 +16,70 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.get('/', (req, res) => res.send('Hello World!'))
 
 // Resgistration system 
-app.post("/signup", async (req, res) => {
-   const { name, email, password, mobile, type, } = req.body
+app.post("/teacher-signup", async (req, res) => {
+   const { name, gender, mobile, email, area, fullAddress, yearOfBarth, whatsApp, city, pinCode, classType, segments,
+      fees,
 
-   const { fullAddress, gender, dateOfBarth, whatsApp, city, area, pinCode, classType } = req.body.otherDetails
+   } = req.body
+   const
+      { education, institueName,
+         tuitorExp, tuitorExpDetails, tuitorApprochDetails,
+      } = req.body.profile
+
+   const {
+      fullName, dateOfBarth, communicationAddress, baPinCode, phone,
+   } = req.body.basicDetails
+   const {
+      cardType, cardHolderName, cardNumber, cvc, expDate
+   } = req.body.basicDetails.paymentInformation
 
    const teacher = await
       db
          .collection("details")
          .doc()
-         .set({
-            name: name,
-            email: email,
-            password: password,
-            mobile: mobile,
-            type: type,
-            otherDetails: {
-               fullAddress: fullAddress,
+         .set(
+            {
+               name: name,
                gender: gender,
-               dateOfBarth: dateOfBarth,
+               mobile: mobile,
+               email: email,
+               area: area,
+               fullAddress: fullAddress,
+               yearOfBarth: yearOfBarth,
                whatsApp: whatsApp,
                city: city,
-               area: area,
                pinCode: pinCode,
                classType: classType,
-
+               segments: segments,
+               fees: fees,
+               profile: {
+                  education: education,
+                  institueName: institueName,
+                  tuitorExp: tuitorExp,
+                  tuitorExpDetails: tuitorExpDetails,
+                  tuitorApprochDetails: tuitorApprochDetails,
+               },
+               basicDetails: {
+                  fullName: fullName,
+                  dateOfBarth: dateOfBarth,
+                  communicationAddress: communicationAddress,
+                  baPinCode: baPinCode,
+                  phone: phone,
+                  paymentInformation: {
+                     cardType: cardType,
+                     cardHolderName: cardHolderName,
+                     cardNumber: cardNumber,
+                     cvc: cvc,
+                     expDate: expDate
+                  }
+               }
             }
+         ).then(result => {
+            console.log(result);
+            res.status(200).send("Profile Updated")
+         }).catch((err) => {
+            console.log(err);
+            res.send(err)
          })
 
 

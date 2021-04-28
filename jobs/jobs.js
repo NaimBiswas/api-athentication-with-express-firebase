@@ -5,14 +5,14 @@ const { dataBase } = require("../src/firebase")
 const cors = require("cors")
 app.use(cors());
 // get All Jobs 
-Router.get('/', async (req, res, next) => {
+Router.get('/', async (req, res,) => {
 
    try {
 
       const AllDate = await dataBase.ref("jobs").once("value")
          .then((data) => {
             if (data.val()) {
-               res.status(200).json(data)
+               res.status(201).json(data)
             } else {
                res.send("NO JOBS FOUNDS")
                console.log("NO JOBS FOUNDS")
@@ -31,27 +31,35 @@ Router.get('/', async (req, res, next) => {
 Router.post("/", async (req, res) => {
    try {
       const ref = dataBase.ref("jobs")
-      const DateTime = Date.now()
-      const { image, title, timteSchedule, priceRange, priceType, postTime, postCategoy, dolarRange, location, totalBid, endDate } = req.body;
+      let DateTime = Date.now()
+
+      const { title, description, skill, employemnt, jobType, } = req.body;
+      const { cardHolderName, cardType, ExpiryDate, cvc, cardNumber } = req.body.paymentInformtation
+
+      console.log(req.body.paymentInformtation);
       await ref.child(DateTime)
          .set({
-            image: image,
             title: title,
-            timteSchedule: timteSchedule,
-            priceRange: priceRange,
-            priceType: priceType,
-            postTime: postTime,
-            postCategoy: postCategoy,
-            dolarRange: dolarRange,
-            location: location,
-            totalBid: totalBid,
-            endDate: endDate
+            description: description,
+            skill: skill,
+            employemnt: employemnt,
+            jobType: jobType,
+            paymentInformtation: {
+               cardHolderName: cardHolderName,
+               cardType: cardType,
+               ExpiryDate: ExpiryDate,
+               cvc: cvc,
+               cardNumber: cardNumber,
+            }
          }).then((result) => {
+
+
             res.status(200).send("Job Added to list")
          }).catch((err) => {
             console.log(err);
             res.send("There was an error!Check Again");
          })
+
    } catch (error) {
       res.send(error)
    }
