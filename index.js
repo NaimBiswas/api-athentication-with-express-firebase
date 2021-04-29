@@ -10,6 +10,7 @@ const jobsRoute = require("./jobs/jobs")
 const bodyParser = require("body-parser")
 const StudentDetails = require("./students/addStudentsDetails")
 const EmployeeSkills = require("./employeeSkills/employeeSkills")
+const instituteDetails = require("./institueDetails/instittuteDetails")
 const cors = require('cors');
 app.use(cors());
 app.use(bodyParser.json())
@@ -17,8 +18,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 
 
-
-
+// institute details 
+app.use("/institute-details", instituteDetails)
 // employee skill 
 app.use("/employee-skills", EmployeeSkills);
 
@@ -50,7 +51,7 @@ app.post("/teacher-details", async (req, res) => {
 
    const teacher = await
       db
-         .collection("details")
+         .collection("teacherDetails")
          .doc()
          .set(
             {
@@ -176,7 +177,7 @@ app.post("/login", async (req, res) => {
 app.use("/course", course)
 
 // Job Routs Here 
-app.use("/jobs", jobsRoute)
+app.use("/employer", jobsRoute)
 
 // google sign in process 
 const googleSignIn = () => {
