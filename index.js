@@ -9,11 +9,20 @@ const course = require("./courses/course")
 const jobsRoute = require("./jobs/jobs")
 const bodyParser = require("body-parser")
 const StudentDetails = require("./students/addStudentsDetails")
+const EmployeeSkills = require("./employeeSkills/employeeSkills")
 const cors = require('cors');
 app.use(cors());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
+
+
+
+
+// employee skill 
+app.use("/employee-skills", EmployeeSkills);
+
+// StudentDetails 
 app.use("/", StudentDetails)
 app.get('/', (req, res) => res.send('Hello World!'))
 
