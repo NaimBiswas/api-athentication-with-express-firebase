@@ -4,21 +4,22 @@ const { db } = require("../src/firebase")
 
 Router.post("/", async (req, res) => {
    try {
-      const { name, gender, mobile, email, area, fullAddress, yearOfBarth, whatsApp, city, pinCode, classType, segments,
-         fees,
+      const { name, mobile, email, area, fullAddress, whatsApp, city, pinCode, classType, fees, segment, sameAsMobile
 
       } = req.body
-      const
-         { education, institueName,
-            tuitorExp, tuitorExpDetails, tuitorApprochDetails,
-         } = req.body.profile
 
       const {
-         fullName, dateOfBarth, communicationAddress, baPinCode, phone,
+         fullName, dateOfBarth, areaPinCode, phoneNumber, communicationAddress
       } = req.body.basicDetails
+
+
       const {
-         cardType, cardHolderName, cardNumber, cvc, expDate
+         cardType, cardHolderName, cardNumber, cvc, expiryMonth, expiryYear
       } = req.body.basicDetails.paymentInformation
+
+
+
+
       const teacher = await
          db
             .collection("instituteDetails")
@@ -26,42 +27,35 @@ Router.post("/", async (req, res) => {
             .set(
                {
                   name: name,
-                  gender: gender,
                   mobile: mobile,
                   email: email,
                   area: area,
                   fullAddress: fullAddress,
-                  yearOfBarth: yearOfBarth,
                   whatsApp: whatsApp,
+                  sameAsMobile: sameAsMobile,
                   city: city,
                   pinCode: pinCode,
                   classType: classType,
-                  segments: segments,
+                  segment: segment,
                   fees: fees,
-                  profile: {
-                     education: education,
-                     institueName: institueName,
-                     tuitorExp: tuitorExp,
-                     tuitorExpDetails: tuitorExpDetails,
-                     tuitorApprochDetails: tuitorApprochDetails,
-                  },
                   basicDetails: {
                      fullName: fullName,
                      dateOfBarth: dateOfBarth,
+                     areaPinCode: areaPinCode,
+                     phoneNumber: phoneNumber,
                      communicationAddress: communicationAddress,
-                     baPinCode: baPinCode,
-                     phone: phone,
                      paymentInformation: {
                         cardType: cardType,
                         cardHolderName: cardHolderName,
                         cardNumber: cardNumber,
                         cvc: cvc,
-                        expDate: expDate
+                        expiryMonth: expiryMonth,
+                        expiryYear: expiryYear,
                      }
                   }
                }
             ).then(result => {
-               console.log(result);
+
                res.status(200).send("Profile Updated")
             }).catch((err) => {
                console.log(err);

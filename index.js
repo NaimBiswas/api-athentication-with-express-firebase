@@ -119,7 +119,10 @@ app.post("/registration", async (req, res) => {
             });
          }).catch((error) => {
             console.log(error.message);
-            res.status(400).send(error.message)
+            res.status(401).json({
+               status: 401,
+               message: error.message,
+            })
          })
          return;
       } catch (error) {
@@ -180,8 +183,12 @@ app.use("/course", course)
 app.use("/employer", jobsRoute)
 
 // google sign in process 
-const googleSignIn = () => {
+app.post("/signin-with-facebook", (req, res) => {
+   console.log(req.body);
    auth.signInWithPopup(provider).catch(error => alert(error.message))
+   res.send("Test is ok")
+})
+const googleSignIn = () => {
 }
 
 
